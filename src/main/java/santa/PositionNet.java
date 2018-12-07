@@ -1,78 +1,69 @@
 package santa;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import com.google.common.collect.Range;
+import com.google.common.collect.RangeMap;
+import com.google.common.collect.TreeRangeMap;
+
+import java.util.*;
 
 public class PositionNet {
 
-    private List<Gift> gifts;
+    public static int LONGITUDE_MIN  = -180;
+    public static int LONGITUDE_MAX  = 180;
+    public static int LONGITUDE_STEP = 15;
 
-    enum Longitude {
-        LONGITUDE_NULL,
-        LONGITUDE_15_POS,
-        LONGITUDE_30_POS,
-        LONGITUDE_45_POS,
-        LONGITUDE_60_POS,
-        LONGITUDE_75_POS,
-        LONGITUDE_90_POS,
-        LONGITUDE_105_POS,
-        LONGITUDE_120_POS,
-        LONGITUDE_135_POS,
-        LONGITUDE_150_POS,
-        LONGITUDE_165_POS,
-        LONGITUDE_180_POS,
-        LONGITUDE_15_NEG,
-        LONGITUDE_30_NEG,
-        LONGITUDE_45_NEG,
-        LONGITUDE_60_NEG,
-        LONGITUDE_75_NEG,
-        LONGITUDE_90_NEG,
-        LONGITUDE_105_NEG,
-        LONGITUDE_120_NEG,
-        LONGITUDE_135_NEG,
-        LONGITUDE_150_NEG,
-        LONGITUDE_165_NEG,
-        LONGITUDE_180_NEG,
-    };
+    public static int LATITUDE_MIN  = -90;
+    public static int LATITUDE_MAX  = 90;
+    public static int LATITUDE_STEP = 15;
+
+    RangeMap<Double, RangeMap<Double, List<Gift>>> longitudeMap;
 
     /**
-     * 0 - 15
-     * 15 - 30
-     * 30 - 45
-     * 45 - 60
-     *
+     * Helper function to construct PositionNet
+     * @return RangeMap of Latitude per Longitude
      */
-    //private Map
+    private static RangeMap<Double, List<Gift>> create() {
+        RangeMap<Double, List<Gift>> latitudeMap = TreeRangeMap.create();
 
-
-    private Longitude getKey(double longitude) {
-        /* Pos */
-        if (longitude >= 0.0 ) {
-            /* >= 90 */
-            if (longitude >= 90.0) {
-                /* >= 150 */
-                if (longitude >= 150.0) {
-                    if (longitude < 165) {
-                        return Longitude.LONGITUDE_105_POS;
-                    }
-                } else {
-
-                }
-                /* < 90 */
-            } else {
-
-            }
-
-            /* Neg */
-        } else {
-
+        for (int i = LATITUDE_MIN; i <= (LATITUDE_MAX - LATITUDE_STEP); i += LATITUDE_STEP) {
+            latitudeMap.put(Range.closed((double) i,  (double)i + LATITUDE_STEP), new ArrayList<Gift>());
         }
-
-        return Longitude.LONGITUDE_NULL;
+        return latitudeMap;
     }
 
+    /**
+     * Constructor
+     */
+    public PositionNet() {
+        longitudeMap = TreeRangeMap.create();
+
+        for (int i = LONGITUDE_MIN; i <= (LONGITUDE_MAX - LONGITUDE_STEP); i += LONGITUDE_STEP) {
+            longitudeMap.put(Range.closed((double) i,  (double)i + LONGITUDE_STEP), create());
+        }
+    }
+
+    /**
+     *
+     * @param gift
+     */
     public void add(Gift gift) {
-        double longitude = gift.getLongitude();
+        longitudeMap.get(gift.getLongitude()).get(gift.getLatitude()).add(gift);
+    }
+
+    public void printMap() {
+        RangeMap<Double, List<Gift>> latitudeMap;
+        List<Gift> gifts;
+        int size = 0;
+        for (Range<Double> longitudeKeys : longitudeMap.asMapOfRanges().keySet()) {
+            System.out.println(String.format("%6.1f", longitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", longitudeKeys.upperEndpoint()));
+            latitudeMap = longitudeMap.get(longitudeKeys.lowerEndpoint());
+            for (Range<Double> latitudeKeys : latitudeMap.asMapOfRanges().keySet()) {
+                gifts = latitudeMap.get(latitudeKeys.lowerEndpoint());
+                size += gifts.size();
+                System.out.println(String.format("    %6.1f", latitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", latitudeKeys.upperEndpoint()) + ": " + String.format("%,5d", gifts.size()));
+
+            }
+        }
+        System.out.println("Total: " + String.format("%,d", size));
     }
 }

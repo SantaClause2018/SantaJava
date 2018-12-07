@@ -16,6 +16,12 @@ public class Main {
         );
         GiftReader reader = new GiftReader(filePath);
         List<Gift> gifts = reader.load();
+        PositionNet net = new PositionNet();
+        for (Gift gift : gifts) {
+            net.add(gift);
+        }
+
+        net.printMap();
 
         System.out.println("Done");
     }

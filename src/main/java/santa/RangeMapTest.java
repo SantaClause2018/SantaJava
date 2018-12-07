@@ -20,6 +20,17 @@ public class RangeMapTest {
         List<Gift> b = map.get(15.0);
         List<Gift> c = map.get(15.1);
 
+        /*
+        for (int i = -90; i <= (90 - 15); i += 15) {
+            System.out.println(i + " - " + (i + 15));
+        }
+
+        for (int i = -180; i <= (180 - 15); i += 15) {
+            System.out.println(i + " - " + (i + 15));
+        }
+        */
+        new PositionNet();
+
         System.out.println("Done!");
     }
 }

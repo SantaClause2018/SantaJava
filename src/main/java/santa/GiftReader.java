@@ -13,12 +13,12 @@ public class GiftReader {
 
     private static Function<String, Gift> mapToGift = (line) -> {
         String[] s = line.split(",");
-        Gift gift  = new Gift();
-        gift.setId(Integer.parseInt(s[0]));
-        gift.setLatitude(Double.parseDouble(s[1]));
-        gift.setLongitude(Double.parseDouble(s[2]));
-        gift.setWeight(Double.parseDouble(s[3]));
-        return gift;
+        return new Gift(
+                Integer.parseInt(s[0]),
+                Double.parseDouble(s[1]),
+                Double.parseDouble(s[2]),
+                Double.parseDouble(s[3])
+        );
     };
 
     public GiftReader(Path filePath) {

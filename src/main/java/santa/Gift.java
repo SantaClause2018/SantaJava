@@ -6,7 +6,7 @@ public class Gift {
     private double weight;
 
     public Gift() {
-
+        this(0, 0.0, 0.0, 0.0);
     }
 
     public Gift(int id, double latitude, double longitude, double weight) {
