@@ -1,21 +1,17 @@
 package santa;
 
-public class Gift {
-    private int id;
+public class GiftPosition {
+
     private double latitude;
     private double longitude;
-    private double weight;
 
-    public Gift() {
-
+    public GiftPosition() {
+        this(0.0, 0.0);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public GiftPosition(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public double getLatitude() {
@@ -32,13 +28,5 @@ public class Gift {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
     }
 }

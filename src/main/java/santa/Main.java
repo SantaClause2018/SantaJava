@@ -16,6 +16,7 @@ public class Main {
         );
         GiftReader reader = new GiftReader(filePath);
         List<Gift> gifts = reader.load();
+
         System.out.println("Done");
     }
 }
