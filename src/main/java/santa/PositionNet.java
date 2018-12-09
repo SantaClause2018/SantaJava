@@ -16,17 +16,17 @@ public class PositionNet {
     public static int LATITUDE_MAX  = 90;
     public static int LATITUDE_STEP = 15;
 
-    RangeMap<Double, RangeMap<Double, List<Gift>>> longitudeMap;
+    RangeMap<Double, RangeMap<Double, PositionCell>> longitudeMap;
 
     /**
      * Helper function to construct PositionNet
      * @return RangeMap of Latitude per Longitude
      */
-    private static RangeMap<Double, List<Gift>> create() {
-        RangeMap<Double, List<Gift>> latitudeMap = TreeRangeMap.create();
+    private static RangeMap<Double, PositionCell> create() {
+        RangeMap<Double, PositionCell> latitudeMap = TreeRangeMap.create();
 
         for (int i = LATITUDE_MIN; i <= (LATITUDE_MAX - LATITUDE_STEP); i += LATITUDE_STEP) {
-            latitudeMap.put(Range.closed((double) i,  (double)i + LATITUDE_STEP), new ArrayList<Gift>());
+            latitudeMap.put(Range.closed((double) i,  (double)i + LATITUDE_STEP), new PositionCell());
         }
         return latitudeMap;
     }
@@ -51,19 +51,29 @@ public class PositionNet {
     }
 
     public void printMap() {
-        RangeMap<Double, List<Gift>> latitudeMap;
+        RangeMap<Double, PositionCell> latitudeMap;
+        PositionCell cell;
         List<Gift> gifts;
         int size = 0;
+        double weight = 0.0;
         for (Range<Double> longitudeKeys : longitudeMap.asMapOfRanges().keySet()) {
             System.out.println(String.format("%6.1f", longitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", longitudeKeys.upperEndpoint()));
             latitudeMap = longitudeMap.get(longitudeKeys.lowerEndpoint());
             for (Range<Double> latitudeKeys : latitudeMap.asMapOfRanges().keySet()) {
-                gifts = latitudeMap.get(latitudeKeys.lowerEndpoint());
+                cell = latitudeMap.get(latitudeKeys.lowerEndpoint());
+                gifts = cell.getList();
                 size += gifts.size();
-                System.out.println(String.format("    %6.1f", latitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", latitudeKeys.upperEndpoint()) + ": " + String.format("%,5d", gifts.size()));
+                weight += cell.getTotalWeight();
+                System.out.print(String.format("    %6.1f", latitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", latitudeKeys.upperEndpoint()));
+                System.out.print("   size: " + String.format("%,5d", gifts.size()));
+                System.out.print("   weight: " + String.format("%,8.1f", cell.getTotalWeight()));
+                if (cell.getTotalWeight() > 0.0) {
+                    System.out.print("   ratio:" + String.format("%,6.1f", cell.getTotalWeight() / gifts.size()));
+                }
+                System.out.println("");
 
             }
         }
-        System.out.println("Total: " + String.format("%,d", size));
+        System.out.println("Total   size: " + String.format("%,8d", size) + "   weight: " + String.format("%,10.1f", weight));
     }
 }
