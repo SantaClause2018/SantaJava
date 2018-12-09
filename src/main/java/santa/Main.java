@@ -23,6 +23,8 @@ public class Main {
 
         net.printMap();
 
+        DistanceTest.runAccuracyTest(gifts, 1000);
+        DistanceTest.runTimeTest(gifts, gifts.size());
         System.out.println("Done");
-    }
+    }       
 }
