@@ -9,14 +9,24 @@ public class DistanceTest {
 	
 	
 	public static void runAccuracyTest(List<Gift> gifts, int testCnt) {
+		Gift gift1;
+		Gift gift2;
 		Random random = new Random();
 		int giftCnt = gifts.size();
 		
 		for (int i=0; i< testCnt-1; i++) {
 			int giftIds1 = random.nextInt(giftCnt);
 			int giftIds2 = random.nextInt(giftCnt);
-			double exactDist = Haversine.getHaversineDistance(gifts.get(giftIds1).getPosition(), gifts.get(giftIds2).getPosition());
-			double approxDist =  Haversine.approximateHaversineDistance(gifts.get(giftIds1).getPosition(), gifts.get(giftIds2).getPosition());
+			gift1 = gifts.get(giftIds1);
+			gift2 = gifts.get(giftIds2);
+			double exactDist = Haversine.distance(
+				gift1.getLatitude(), gift1.getLongitude(),
+				gift2.getLatitude(), gift2.getLongitude()
+			);
+			double approxDist = Haversine.approximateDistance(
+				gift1.getLatitude(), gift1.getLongitude(),
+				gift2.getLatitude(), gift2.getLongitude()
+			);
 			
 			System.out.println(toResultString(exactDist, approxDist, "%6.1f"));
 		}
@@ -24,7 +34,9 @@ public class DistanceTest {
 	}
 	
 	public static void runTimeTest(List<Gift> gifts, int testCnt) {
-		
+
+		GiftPosition giftPos1;
+		GiftPosition giftPost2;
 		long exactTime = 0;
 		long approxTime = 0;
 		
@@ -40,14 +52,24 @@ public class DistanceTest {
 		
 		
 		for (Map.Entry<GiftPosition, GiftPosition> entry: testGifts.entrySet()) {
-			Haversine.getHaversineDistance(entry.getKey(), entry.getValue());
+			giftPos1 = entry.getKey();
+			giftPost2 = entry.getValue();
+			Haversine.distance(
+					giftPos1.getLatitude(), giftPos1.getLongitude(),
+					giftPost2.getLatitude(), giftPost2.getLongitude()
+			);
 		}
 		long exactEndTime = System.currentTimeMillis();
 		exactTime = exactEndTime - exactStartTime;
 		
 		long approxStartTime = System.currentTimeMillis();
 		for (Map.Entry<GiftPosition, GiftPosition> entry: testGifts.entrySet()) {
-			Haversine.approximateHaversineDistance(entry.getKey(), entry.getValue());
+			giftPos1 = entry.getKey();
+			giftPost2 = entry.getValue();
+			Haversine.approximateDistance(
+					giftPos1.getLatitude(), giftPos1.getLongitude(),
+					giftPost2.getLatitude(), giftPost2.getLongitude()
+			);
 		}
 		long approxEndTime = System.currentTimeMillis();
 		approxTime = approxEndTime - approxStartTime;
