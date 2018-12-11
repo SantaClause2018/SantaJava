@@ -44,4 +44,8 @@ public class GiftPosition {
     public List<GiftNeighbour> getNeighbours() {
         return neighbours;
     }
+
+    public double getHaversineDistance(GiftPosition giftPos2) {
+        return Haversine.getHaversineDistance(this, giftPos2);
+    }
 }
