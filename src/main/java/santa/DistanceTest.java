@@ -1,9 +1,9 @@
 package santa;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import com.google.common.base.Stopwatch;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DistanceTest {
 	
@@ -14,7 +14,7 @@ public class DistanceTest {
 		Random random = new Random();
 		int giftCnt = gifts.size();
 		
-		for (int i=0; i< testCnt-1; i++) {
+		for (int i=0; i< testCnt; i++) {
 			int giftIds1 = random.nextInt(giftCnt);
 			int giftIds2 = random.nextInt(giftCnt);
 			gift1 = gifts.get(giftIds1);
@@ -28,7 +28,7 @@ public class DistanceTest {
 				gift2.getLatitude(), gift2.getLongitude()
 			);
 			
-			System.out.println(toResultString(exactDist, approxDist, "%6.1f"));
+			System.out.println(toAccuracyResultString(exactDist, approxDist, "%6.1f"));
 		}
 		    
 	}
@@ -37,14 +37,13 @@ public class DistanceTest {
 
 		GiftPosition giftPos1;
 		GiftPosition giftPost2;
-		long exactTime = 0;
-		long approxTime = 0;
-		
-		long exactStartTime = System.currentTimeMillis();
-		HashMap<GiftPosition, GiftPosition>testGifts = new HashMap<GiftPosition, GiftPosition>();
+
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		HashMap<GiftPosition, GiftPosition>testGifts;
+		testGifts = new HashMap<>();
 		Random random = new Random();
 		int giftCnt = gifts.size();
-		for (int i = 0; i< testCnt-1; i++) {
+		for (int i = 0; i< testCnt; i++) {
 			int giftIds1 = random.nextInt(giftCnt);
 			int giftIds2 = random.nextInt(giftCnt);
 			testGifts.put(gifts.get(giftIds1).getPosition(), gifts.get(giftIds2).getPosition());
@@ -59,10 +58,10 @@ public class DistanceTest {
 					giftPost2.getLatitude(), giftPost2.getLongitude()
 			);
 		}
-		long exactEndTime = System.currentTimeMillis();
-		exactTime = exactEndTime - exactStartTime;
-		
-		long approxStartTime = System.currentTimeMillis();
+		System.out.println("Execution time exact method:=" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
+
+		stopwatch.reset();
+		stopwatch.start();
 		for (Map.Entry<GiftPosition, GiftPosition> entry: testGifts.entrySet()) {
 			giftPos1 = entry.getKey();
 			giftPost2 = entry.getValue();
@@ -71,16 +70,11 @@ public class DistanceTest {
 					giftPost2.getLatitude(), giftPost2.getLongitude()
 			);
 		}
-		long approxEndTime = System.currentTimeMillis();
-		approxTime = approxEndTime - approxStartTime;
-		
-		System.out.println("exection time exact Method: " + exactTime + " ms, execution time approximation: " + approxTime +  " ms (" + testCnt + " calculations)");
+		System.out.println("Execution time approximation:=" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 	}
+
 	
-	
-	
-	
-	private static String toResultString(double exact, double approx, String format) {
+	private static String toAccuracyResultString(double exact, double approx, String format) {
 	 return	"exact calc: " + String.format(format,exact) + ", approx calc: " + String.format(format,approx) + 
 		", diff: " + String.format(format,getAbsErr(exact,approx)) + ", rel: "  + String.format(format,(getRelErr(exact, approx)*100)) + "%" ;
 	}
@@ -92,5 +86,7 @@ public class DistanceTest {
 	private static double getRelErr(double exact, double approximation) {
 		return getAbsErr(exact, approximation)/ exact;
 	}
+
+
 
 }

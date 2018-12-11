@@ -17,8 +17,8 @@ public class Haversine {
         // apply formula
         double sin1 = Math.sin((phi2-phi1) / 2);
         double sin2 = Math.sin((lambda2-lambda1) / 2);
-        double a = sin1*sin1 + Math.cos(phi1) * Math.cos(phi2) * sin2*sin2;
-        return EARTH_DIAMETER * Math.asin(Math.sqrt(a));
+        double radicand = sin1*sin1 + Math.cos(phi1) * Math.cos(phi2) * sin2*sin2;
+        return EARTH_DIAMETER * Math.asin(Math.sqrt(radicand));
     }
 
     public static double approximateDistance(double startLat, double startLong,
@@ -64,28 +64,6 @@ public class Haversine {
             if (i % 4 == 3) sum -= term;
         }
         return sum;
-    }
-
-    private static double asinApprox(double x, double eps ) {
-        // compute the Taylor series approximation
-        x = x % (2 * Math.PI);
-        double term = 1.0;      // ith term = x^i / i!
-        double sum  = 0.0;      // sum of first i terms in taylor series
-
-        for (int i = 1; Math.abs(term) >= eps; i++) {
-            term *= (x / i);
-            if (i % 4 == 1 || i % 4 == 3) sum += term;
-        }
-        return sum;
-    }
-
-
-    private static int factorial(int n) {
-        int result = 1;
-        for (int i = 1; i <= n; i++){
-            result = result * i;
-        }
-        return result;
     }
 
 }
