@@ -17,7 +17,7 @@ public class GiftPosition {
     public GiftPosition(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.northPoleDistance = Haversine.approximateDistance(90.0, 0, latitude, longitude);
+        this.northPoleDistance = Haversine.approximateDistance(Math.PI, 0, latitude, longitude);
         this.neighbours = new ArrayList<>();
     }
 

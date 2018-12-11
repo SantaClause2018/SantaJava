@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static santa.Gift.NOT_ASSIGNED_TO_TOUR;
+
 public class GiftReader {
 
     private Path filePath;
@@ -15,9 +17,10 @@ public class GiftReader {
         String[] s = line.split(",");
         return new Gift(
                 Integer.parseInt(s[0]),
-                Double.parseDouble(s[1]),
-                Double.parseDouble(s[2]),
-                Double.parseDouble(s[3])
+                Math.toRadians(Double.parseDouble(s[1])),
+                Math.toRadians(Double.parseDouble(s[2])),
+                (Double.parseDouble(s[3])),
+                NOT_ASSIGNED_TO_TOUR
         );
     };
 

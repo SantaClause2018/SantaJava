@@ -9,10 +9,10 @@ public class Haversine {
                                   double endLat, double endLong) {
 
         // calculate lat and log in rad
-        double phi1 = Math.toRadians(startLat);
-        double phi2 = Math.toRadians(endLat);
-        double lambda1 = Math.toRadians(startLong);
-        double lambda2 = Math.toRadians(endLong);
+        double phi1 = startLat;
+        double phi2 = endLat;
+        double lambda1 = startLong;
+        double lambda2 = endLong;
 
         // apply formula
         double sin1 = Math.sin((phi2-phi1) / 2);
@@ -25,10 +25,10 @@ public class Haversine {
                                              double endLat, double endLong) {
 
         // calculate lat and log in rad
-        double phi1 = Math.toRadians(startLat);
-        double phi2 = Math.toRadians(endLat);
-        double lambda1 = Math.toRadians(startLong);
-        double lambda2 = Math.toRadians(endLong);
+        double phi1 = startLat;
+        double phi2 = endLat;
+        double lambda1 = startLong;
+        double lambda2 = endLong;
 
         // apply formula
         double sin1 = sinApprox((phi2-phi1) / 2, APPROX_ACCURACY);

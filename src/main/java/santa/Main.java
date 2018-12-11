@@ -9,7 +9,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+
+    public static final double MAX_SLEIGH_WEIGHT = 1000;
+
     public static void main(String[] args) throws IOException {
+
+
+
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -54,11 +60,13 @@ public class Main {
 
         //net.printMap();
 
-        DistanceTest.runAccuracyTest(gifts, 1000);
-        DistanceTest.runTimeTest(gifts, gifts.size());
+        //DistanceTest.runAccuracyTest(gifts, 1000);
+       //DistanceTest.runTimeTest(gifts, gifts.size());
 
         stopwatch.stop();
         System.out.println("stop=" + stopwatch.elapsed(TimeUnit.SECONDS));
         System.out.println("Done");
+
+        RandomTourBuilder.getTours(gifts);
     }
 }
