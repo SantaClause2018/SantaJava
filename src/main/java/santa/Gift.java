@@ -1,5 +1,7 @@
 package santa;
 
+import java.util.List;
+
 public class Gift {
     private int id;
     private GiftPosition position;
@@ -39,6 +41,13 @@ public class Gift {
         this.weight = weight;
     }
 
+    public void print() {
+        System.out.println("id=" + id + " weight=" + weight + " northpoleDist=" + position.getNorthPoleDistance());
+        for (GiftNeighbour neighbour : position.getNeighbours()) {
+            System.out.println("    id=" + neighbour.getSecond().getId() + " dist=" + neighbour.getDistance());
+        }
+    }
+
     /**
      *
      */
@@ -57,6 +66,14 @@ public class Gift {
 
     public void setLongitude(double longitude) {
         position.setLongitude(longitude);
+    }
+
+    public double getNorthPoleDistance() {
+        return position.getNorthPoleDistance();
+    }
+
+    public List<GiftNeighbour> getNeighbours() {
+        return position.getNeighbours();
     }
 
 }
