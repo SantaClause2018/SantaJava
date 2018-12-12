@@ -28,7 +28,7 @@ public class RandomTourBuilder {
             curGift.setTour(currentTour);
             currentSleighWeight += curGift.getWeight();
             if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
-                tourLengths.set(currentTour, Haversine.approximateDistance(curGift.getLatitude(), curGift.getLongitude(),0,0)); // close tour
+                tourLengths.set(currentTour, curGift.getNorthPoleDistance()); // close tour
                 currentTour++;
                 curGift.setTour(currentTour);
                 currentSleighWeight = curGift.getWeight();
@@ -38,7 +38,7 @@ public class RandomTourBuilder {
             // update tour length
             if (tourLengths.get(currentTour) <=0.0) {
                 // is first gift on tour
-                tourLengths.set(currentTour, Haversine.approximateDistance(0,0,curGift.getLatitude(), curGift.getLongitude()));
+                tourLengths.set(currentTour,curGift.getNorthPoleDistance());
             }
             else {
                 tourLengths.set(currentTour, Haversine.approximateDistance( curSet.get(i-1).getLatitude(),curSet.get(i-1).getLongitude(),curGift.getLatitude(), curGift.getLongitude()));
@@ -46,7 +46,7 @@ public class RandomTourBuilder {
         }
 
         // close last tour
-        tourLengths.set(currentTour, Haversine.approximateDistance(curSet.get(curSet.size()-1).getLatitude(), curSet.get(curSet.size()-1).getLongitude(),0,0)); // close tour
+        tourLengths.set(currentTour, curSet.get(curSet.size()-1).getNorthPoleDistance()); // close tour
         //curSet.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
 
         // calculate total tour length

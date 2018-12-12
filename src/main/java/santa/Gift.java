@@ -13,7 +13,7 @@ public class Gift {
     private int tour;
 
     public Gift() {
-        this(0, 0.0, 0.0, 0.0, 0);
+        this(0, 0.0, 0.0, 0.0, NOT_ASSIGNED_TO_TOUR);
     }
 
     public Gift(int id, double latitude, double longitude, double weight, int tour) {
