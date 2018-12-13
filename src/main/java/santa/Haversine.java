@@ -3,7 +3,7 @@ package santa;
 public class Haversine {
     public static double APPROX_ACCURACY = 0.01;
 
-    private static final double EARTH_DIAMETER = 12742.274;
+    private static final double EARTH_DIAMETER_KM = 12742.274;
 
     public static double distance(double startLat, double startLong,
                                   double endLat, double endLong) {
@@ -18,7 +18,7 @@ public class Haversine {
         double sin1 = Math.sin((phi2-phi1) / 2);
         double sin2 = Math.sin((lambda2-lambda1) / 2);
         double radicand = sin1*sin1 + Math.cos(phi1) * Math.cos(phi2) * sin2*sin2;
-        return EARTH_DIAMETER * Math.asin(Math.sqrt(radicand));
+        return EARTH_DIAMETER_KM * Math.asin(Math.sqrt(radicand));
     }
 
     public static double approximateDistance(double startLat, double startLong,
@@ -35,7 +35,7 @@ public class Haversine {
         double sin2 = sinApprox((lambda2-lambda1) / 2, APPROX_ACCURACY);
         double radicand =  sin1*sin1 + cosApprox(phi1, APPROX_ACCURACY)*cosApprox(phi2, APPROX_ACCURACY)*sin2*sin2;
 
-        return  EARTH_DIAMETER * Math.asin(Math.sqrt(radicand));
+        return  EARTH_DIAMETER_KM * Math.asin(Math.sqrt(radicand));
     }
 
     private static double cosApprox(double x, double eps){

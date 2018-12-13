@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static santa.Main.EMPTY_SLEIGH_WEIGHT;
 import static santa.Main.MAX_SLEIGH_WEIGHT;
 
 public class RandomTourBuilder {
@@ -32,7 +33,7 @@ public class RandomTourBuilder {
         List<Double> tourLengths = new ArrayList<Double>();
         tourLengths.add(0.0);
         int currentTour = 0;
-        double currentSleighWeight = 0.0;
+        double currentSleighWeight = EMPTY_SLEIGH_WEIGHT;
 
         for (int i = 0; i < curSet.size(); i++) {
             Gift curGift = curSet.get(i);
@@ -42,13 +43,13 @@ public class RandomTourBuilder {
             /* overweight => create new tour */
             if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
                 /* close tour */
-                /* TODO: now replace, should be added? */
-                tourLengths.set(currentTour, curGift.getNorthPoleDistance());
+                tourLengths.set(currentTour, tourLengths.get(currentTour) + curGift.getNorthPoleDistance());
+                System.out.println("tour " + currentTour + " has lenght " + tourLengths.get(currentTour));
 
                 /* create new tour */
                 currentTour++;
                 curGift.setTour(currentTour);
-                currentSleighWeight = curGift.getWeight();
+                currentSleighWeight = EMPTY_SLEIGH_WEIGHT + curGift.getWeight();
                 tourLengths.add(0.0);
             }
 
@@ -58,9 +59,8 @@ public class RandomTourBuilder {
                 tourLengths.set(currentTour, curGift.getNorthPoleDistance());
             } else {
                 /* add distance A -> B */
-                /* TODO: now replace, should be added? */
-                tourLengths.set(currentTour,
-                    Haversine.approximateDistance(
+                tourLengths.set(currentTour, tourLengths.get(currentTour) +
+                    Haversine.distance(
                         curSet.get(i-1).getLatitude(), curSet.get(i-1).getLongitude(),
                         curGift.getLatitude(), curGift.getLongitude()
                     )
@@ -69,8 +69,8 @@ public class RandomTourBuilder {
         }
 
         // close last tour
-        /* TODO: now replace, should be added? */
-        tourLengths.set(currentTour, curSet.get(curSet.size()-1).getNorthPoleDistance()); // close tour
+        tourLengths.set(currentTour, tourLengths.get(currentTour) +
+                curSet.get(curSet.size()-1).getNorthPoleDistance()); // close tour
         //curSet.sort((g1, g2) -> Integer.compare(g1.getId(), g2.getId()));
 
         // calculate total tour length
