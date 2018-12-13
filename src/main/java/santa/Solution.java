@@ -6,8 +6,8 @@ import java.util.List;
 public class Solution {
 
     private List<Tour> tours;
-    private double totalWeariness = 0;
-    private double totalLength = 0;
+    private double totalWeariness = -1;
+    private double totalLength = -1;
 
     public Solution () {
         tours = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Solution {
 
         for (Tour tour: tours) {
             totalWeariness += tour.calcWeariness();
-            totalLength += tour.getTotalDistance();
+            totalLength += tour.getTotalDistanceKm();
         }
         return totalWeariness;
     }
@@ -49,4 +49,30 @@ public class Solution {
     public double getTotalLength() {
         return totalLength;
     }
+
+    public List<Double> getSleighWeights() {
+        List<Double> weights = new ArrayList<>();
+        for (Tour tour: tours) {
+            weights.add(tour.getSleighWeight());
+        }
+        return weights;
+    }
+
+    public List<Double> getTourLengthsKm() {
+        List<Double> lengths = new ArrayList<>();
+        for (Tour tour: tours) {
+            lengths.add(tour.getTotalDistanceKm());
+        }
+        return lengths;
+    }
+
+    public List<Double> getWeariness() {
+        List<Double> weariness = new ArrayList<>();
+        for (Tour tour: tours) {
+            weariness.add(tour.getWeariness());
+        }
+        return weariness;
+    }
+
+
 }

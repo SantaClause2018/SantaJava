@@ -16,10 +16,11 @@ public class Tour {
 
     private List<Gift> gifts;
 
-    private double totalDistance = -1;       /* north pole to north pole distance */
+    private double totalDistanceKm = -1;       /* north pole to north pole distance */
     private double sleighWeight = 0;         /* weight of the sleigh at the start of the tour */
     private double weariness = -1;           /* weighted reindeer weariness */
     private int tourId = NOT_ASSIGNED_TO_TOUR; /* number of this tour */
+    private double runtimeWearinessCalcMicSec = -1;
 
     public Tour(List<Gift> giftsOnTour) {
         this.gifts = giftsOnTour;
@@ -30,7 +31,7 @@ public class Tour {
 
     public Tour(int tourId) {
         this.tourId = tourId;
-        this.gifts = new ArrayList<Gift>();
+        this.gifts = new ArrayList<>();
     }
 
     public void addGift(Gift gift) {
@@ -56,7 +57,7 @@ public class Tour {
         sleighWeight = EMPTY_SLEIGH_WEIGHT;
 
         double segmentDistance = lastGift.getNorthPoleDistance();
-        totalDistance += segmentDistance;
+        totalDistanceKm += segmentDistance;
         weariness = sleighWeight * segmentDistance;
 
         if (gifts.size() > 1) {
@@ -65,19 +66,19 @@ public class Tour {
                 segmentDistance = Haversine.approximateDistance(gifts.get(i).getLatitude(),
                         gifts.get(i).getLongitude(), gifts.get(i - 1).getLatitude(),
                         gifts.get(i - 1).getLongitude());
-                totalDistance += segmentDistance;
+                totalDistanceKm += segmentDistance;
                 weariness += sleighWeight * segmentDistance;
             }
         }
         sleighWeight += firstGift.getWeight();
         segmentDistance = firstGift.getNorthPoleDistance();
-        totalDistance += segmentDistance;
+        totalDistanceKm += segmentDistance;
         weariness += sleighWeight * segmentDistance;
 
 
         stopwatch.stop();
-        System.out.println(" reindeer weariness of tour " + tourId + " : " + weariness);
-        System.out.println("runtime to calc. weariness: " + stopwatch.elapsed(TimeUnit.MICROSECONDS) + " us");
+
+        runtimeWearinessCalcMicSec =  stopwatch.elapsed(TimeUnit.MICROSECONDS);
         // dist(north-pole -> A) * (BASE_WEIGHT + Gift A + Gift B) +
         // dist(A - > B)         * (BASE_WEIGHT + Gift A) +
         // dist(B -> north-pole) * ((BASE_WEIGHT)
@@ -85,8 +86,8 @@ public class Tour {
         return weariness;
     }
 
-    public double getTotalDistance() {
-        return totalDistance;
+    public double getTotalDistanceKm() {
+        return totalDistanceKm;
     }
 
     public double getSleighWeight() {
@@ -99,5 +100,23 @@ public class Tour {
 
     public int getTourId() {
         return  tourId;
+    }
+
+    public double getRuntimeWearinessCalcMicSec() { return runtimeWearinessCalcMicSec; }
+
+
+    /**
+     * Clone the list but not the gifts inside!4
+     *
+     * @param originalGifts
+     * @return
+     */
+    public static List<Gift> cloneGiftList(List<Gift> originalGifts) {
+        ArrayList<Gift> clonedGifts = new ArrayList<>(originalGifts.size());
+
+        for (Gift g : originalGifts) {
+            clonedGifts.add(g);
+        }
+        return clonedGifts;
     }
 }

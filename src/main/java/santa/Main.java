@@ -26,10 +26,16 @@ public class Main {
         //DistanceTest.runAccuracyTest(gifts, 1000);
         //DistanceTest.runTimeTest(gifts, gifts.size());
 
-        List<Tour> tours = SlicedRandomTourBuilder.getTours(gifts);
+        Solution slicedRandomSolution = SlicedRandomTourBuilder.getTours(gifts);
+        slicedRandomSolution.calculateTotalWeariness();
+        System.out.println("random slice: total weariness: " + slicedRandomSolution.getTotalWeariness() +
+                ", total distance: " + slicedRandomSolution.getTotalLength());
 
         System.out.println("Done");
 
-        //RandomTourBuilder.getTours(gifts);
+        Solution randomSolution = RandomTourBuilder.getTours(gifts);
+        randomSolution.calculateTotalWeariness();
+        System.out.println("random: total weariness: " + randomSolution.getTotalWeariness() +
+                ", total distance: " + randomSolution.getTotalLength());
     }
 }

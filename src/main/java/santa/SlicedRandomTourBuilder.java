@@ -14,7 +14,7 @@ import static santa.Tour.MAX_SLEIGH_WEIGHT;
 
 public class SlicedRandomTourBuilder {
 
-    public static List<Tour> getTours(List<Gift> gifts) {
+    public static Solution getTours(List<Gift> gifts) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -56,13 +56,10 @@ public class SlicedRandomTourBuilder {
         List<Gift> cellGifts;
         int i;
 
-
-        List<Double> tourLengths = new ArrayList<Double>();
-        tourLengths.add(0.0);
         int currentTour = 0;
         double currentSleighWeight = EMPTY_SLEIGH_WEIGHT;
         Tour tour = new Tour(currentTour);
-        List<Tour> tours = new ArrayList<>();
+        Solution tours = new Solution();
 
         /* Loop over slices => longitude-map using key (longitude range: <lower, upper>) */
         for (Range<Double> longitudeKeys : slices.getLongitudeMap().asMapOfRanges().keySet()) {
@@ -73,29 +70,28 @@ public class SlicedRandomTourBuilder {
             for (i = 0; i < cell.getList().size(); i++) {
                 Gift gift = cell.getList().get(i);
 
-                gift.setTour(currentTour);
+
                 currentSleighWeight += gift.getWeight();
 
                 /* overweight => create new tour */
                 if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
                     /* close tour */
-                    //System.out.println("tour " + currentTour + " has lenght " + tourLengths.get(currentTour));
+                    //System.out.println("tour " + currentTour + " has length " + tourLengths.get(currentTour));
 
                     /* add old */
                     tour.calcWeariness();
-                    tours.add(tour);
+                    tours.addTour(tour);
 
                     /* create new tour */
                     currentTour++;
                     tour = new Tour(currentTour);
-                    gift.setTour(currentTour);
                     currentSleighWeight = gift.getWeight();
                 }
 
+                gift.setTour(currentTour);
                 tour.addGift(gift);
             }
-            tour.calcWeariness();
-            tours.add(tour);
+            tours.addTour(tour);
         }
 
         stopwatch.stop();
