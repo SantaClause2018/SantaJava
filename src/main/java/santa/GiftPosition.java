@@ -51,4 +51,8 @@ public class GiftPosition {
             giftPos2.getLatitude(), giftPos2.getLongitude()
         );
     }
+
+    public String toString() {
+        return String.format("%4.1f / %4.1f", latitude, longitude);
+    }
 }

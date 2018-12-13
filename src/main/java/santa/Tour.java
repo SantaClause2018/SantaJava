@@ -28,7 +28,8 @@ public class Tour {
         }
     }
 
-    public Tour() {
+    public Tour(int tourId) {
+        this.tourId = tourId;
         this.gifts = new ArrayList<Gift>();
     }
 
@@ -38,6 +39,10 @@ public class Tour {
 
     public Gift removeGift(int index) {
         return gifts.remove(index);
+    }
+
+    public int size() {
+        return gifts.size();
     }
 
 
@@ -70,8 +75,9 @@ public class Tour {
         weariness += sleighWeight * segmentDistance;
 
 
+        stopwatch.stop();
         System.out.println(" reindeer weariness of tour " + tourId + " : " + weariness);
-        System.out.println("runtime to calc. weariness: " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        System.out.println("runtime to calc. weariness: " + stopwatch.elapsed(TimeUnit.MICROSECONDS) + " us");
         // dist(north-pole -> A) * (BASE_WEIGHT + Gift A + Gift B) +
         // dist(A - > B)         * (BASE_WEIGHT + Gift A) +
         // dist(B -> north-pole) * ((BASE_WEIGHT)

@@ -86,4 +86,8 @@ public class Gift {
         return position.getNeighbours();
     }
 
+    public String toString() {
+        return position.toString();
+    }
+
 }

@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static santa.Route.EMPTY_SLEIGH_WEIGHT;
-import static santa.Route.MAX_SLEIGH_WEIGHT;
+import static santa.Tour.EMPTY_SLEIGH_WEIGHT;
+import static santa.Tour.MAX_SLEIGH_WEIGHT;
 
 public class RandomTourBuilder {
 

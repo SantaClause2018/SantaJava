@@ -10,11 +10,11 @@ public class PositionNet {
 
     public static int LONGITUDE_MIN  = -180;
     public static int LONGITUDE_MAX  = 180;
-    public static int LONGITUDE_STEP = 15;
+    public static int LONGITUDE_STEP = 5;
 
     public static int LATITUDE_MIN  = -90;
     public static int LATITUDE_MAX  = 90;
-    public static int LATITUDE_STEP = 15;
+    public static int LATITUDE_STEP = 5;
 
     RangeMap<Double, RangeMap<Double, PositionCell>> longitudeMap;
 
@@ -50,20 +50,40 @@ public class PositionNet {
         longitudeMap.get(gift.getLongitude()).get(gift.getLatitude()).add(gift);
     }
 
+    public RangeMap<Double, RangeMap<Double, PositionCell>> getLongitudeMap() {
+        return longitudeMap;
+    }
+
     public void printMap() {
         RangeMap<Double, PositionCell> latitudeMap;
         PositionCell cell;
         List<Gift> gifts;
-        int size = 0;
+        int totalSize = 0;
+        int sliceSize = 0;
         double weight = 0.0;
+
+
+        /* Loop over slices => longitude-map using key (longitude range: <lower, upper>) */
         for (Range<Double> longitudeKeys : longitudeMap.asMapOfRanges().keySet()) {
-            System.out.println(String.format("%6.1f", longitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", longitudeKeys.upperEndpoint()));
+            sliceSize = 0;
+
+            /* Get one slice */
             latitudeMap = longitudeMap.get(longitudeKeys.lowerEndpoint());
+
+            /* Print slice */
+            System.out.println(String.format("%6.1f", longitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", longitudeKeys.upperEndpoint()));
+
+            /* Loop over cells => latitude-map using key (latitude range: <lower, upper>) */
             for (Range<Double> latitudeKeys : latitudeMap.asMapOfRanges().keySet()) {
+
+                /* Get one cell */
                 cell = latitudeMap.get(latitudeKeys.lowerEndpoint());
+
                 gifts = cell.getList();
-                size += gifts.size();
+                sliceSize += gifts.size();
                 weight += cell.getTotalWeight();
+
+                /* Print cell */
                 System.out.print(String.format("    %6.1f", latitudeKeys.lowerEndpoint()) + " => " + String.format("%6.1f", latitudeKeys.upperEndpoint()));
                 System.out.print("   size: " + String.format("%,5d", gifts.size()));
                 System.out.print("   weight: " + String.format("%,8.1f", cell.getTotalWeight()));
@@ -73,7 +93,41 @@ public class PositionNet {
                 System.out.println("");
 
             }
+            totalSize += sliceSize;
+            //System.out.println("   slice-size: " + sliceSize);
         }
-        System.out.println("Total   size: " + String.format("%,8d", size) + "   weight: " + String.format("%,10.1f", weight));
+        System.out.println("Total   size: " + String.format("%,8d", totalSize) + "   weight: " + String.format("%,10.1f", weight));
+    }
+
+    public void sort() {
+        RangeMap<Double, PositionCell> latitudeMap;
+        PositionCell cell;
+        List<Gift> gifts;
+
+        /* Loop over slices => longitude-map using key (longitude range: <lower, upper>) */
+        for (Range<Double> longitudeKeys : longitudeMap.asMapOfRanges().keySet()) {
+
+            /* Get one slice */
+            latitudeMap = longitudeMap.get(longitudeKeys.lowerEndpoint());
+
+            for (Range<Double> latitudeKeys : latitudeMap.asMapOfRanges().keySet()) {
+
+                /* Get one cell */
+                cell = latitudeMap.get(latitudeKeys.lowerEndpoint());
+
+                /* Get gifts of one cell */
+                gifts = cell.getList();
+
+                /* Sort */
+                Collections.sort(gifts, (o1, o2) -> {
+                    if (o1.getPosition().getLatitude() < o2.getPosition().getLatitude()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+            }
+
+        }
     }
 }
