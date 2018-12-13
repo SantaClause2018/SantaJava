@@ -32,8 +32,8 @@ public class Haversine {
 
         // apply formula
         double sin1 = sinApprox((phi2-phi1) / 2, APPROX_ACCURACY);
-        double sin2 = sinApprox((lambda2-lambda1) / 2,APPROX_ACCURACY);
-        double radicand =  sin1*sin1 + cosApprox(phi1,APPROX_ACCURACY)*cosApprox(phi2,APPROX_ACCURACY)*sin2*sin2;
+        double sin2 = sinApprox((lambda2-lambda1) / 2, APPROX_ACCURACY);
+        double radicand =  sin1*sin1 + cosApprox(phi1, APPROX_ACCURACY)*cosApprox(phi2, APPROX_ACCURACY)*sin2*sin2;
 
         return  EARTH_DIAMETER * Math.asin(Math.sqrt(radicand));
     }

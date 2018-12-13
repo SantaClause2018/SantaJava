@@ -14,9 +14,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-
-
-
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Path filePath = Paths.get(
@@ -51,17 +48,18 @@ public class Main {
 
                 System.out.println(String.format("%6d", i) + " elapsed=" + stopwatch.elapsed(TimeUnit.SECONDS));
             }
+        }
 
-            /* Debug */
+        /* grid */
+        if (false) {
             for (Gift gift : gifts) {
                 net.add(gift);
             }
+            net.printMap();
         }
 
-        //net.printMap();
-
         //DistanceTest.runAccuracyTest(gifts, 1000);
-       //DistanceTest.runTimeTest(gifts, gifts.size());
+        //DistanceTest.runTimeTest(gifts, gifts.size());
 
         stopwatch.stop();
         System.out.println("stop=" + stopwatch.elapsed(TimeUnit.SECONDS));
