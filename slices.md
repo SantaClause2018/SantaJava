@@ -1,0 +1,80 @@
+
+# Slices
+
+```
+-180.0 => -175.0   slice-size: 141
+-175.0 => -170.0   slice-size: 112
+-170.0 => -165.0   slice-size: 110
+-165.0 => -160.0   slice-size: 255
+-160.0 => -155.0   slice-size: 362
+-155.0 => -150.0   slice-size: 307
+-150.0 => -145.0   slice-size: 280
+-145.0 => -140.0   slice-size: 275
+-140.0 => -135.0   slice-size: 311
+-135.0 => -130.0   slice-size: 420
+-130.0 => -125.0   slice-size: 501
+-125.0 => -120.0   slice-size: 873
+-120.0 => -115.0   slice-size: 1124
+-115.0 => -110.0   slice-size: 1290
+-110.0 => -105.0   slice-size: 1379
+-105.0 => -100.0   slice-size: 1650
+-100.0 =>  -95.0   slice-size: 1599
+ -95.0 =>  -90.0   slice-size: 1423
+ -90.0 =>  -85.0   slice-size: 1348
+ -85.0 =>  -80.0   slice-size: 1269
+ -80.0 =>  -75.0   slice-size: 1682
+ -75.0 =>  -70.0   slice-size: 2482
+ -70.0 =>  -65.0   slice-size: 2743
+ -65.0 =>  -60.0   slice-size: 2310
+ -60.0 =>  -55.0   slice-size: 1939
+ -55.0 =>  -50.0   slice-size: 1742
+ -50.0 =>  -45.0   slice-size: 1392
+ -45.0 =>  -40.0   slice-size: 1141
+ -40.0 =>  -35.0   slice-size: 606
+ -35.0 =>  -30.0   slice-size: 307
+ -30.0 =>  -25.0   slice-size: 302
+ -25.0 =>  -20.0   slice-size: 255
+ -20.0 =>  -15.0   slice-size: 367
+ -15.0 =>  -10.0   slice-size: 962
+ -10.0 =>   -5.0   slice-size: 1485
+  -5.0 =>    0.0   slice-size: 1695
+   0.0 =>    5.0   slice-size: 1617
+   5.0 =>   10.0   slice-size: 1852
+  10.0 =>   15.0   slice-size: 2495
+  15.0 =>   20.0   slice-size: 3157
+  20.0 =>   25.0   slice-size: 3376
+  25.0 =>   30.0   slice-size: 3346
+  30.0 =>   35.0   slice-size: 3172
+  35.0 =>   40.0   slice-size: 2640
+  40.0 =>   45.0   slice-size: 2262
+  45.0 =>   50.0   slice-size: 2396
+  50.0 =>   55.0   slice-size: 1691
+  55.0 =>   60.0   slice-size: 1485
+  60.0 =>   65.0   slice-size: 1450
+  65.0 =>   70.0   slice-size: 1445
+  70.0 =>   75.0   slice-size: 1584
+  75.0 =>   80.0   slice-size: 2004
+  80.0 =>   85.0   slice-size: 1824
+  85.0 =>   90.0   slice-size: 1606
+  90.0 =>   95.0   slice-size: 1702
+  95.0 =>  100.0   slice-size: 2154
+ 100.0 =>  105.0   slice-size: 2316
+ 105.0 =>  110.0   slice-size: 1858
+ 110.0 =>  115.0   slice-size: 1954
+ 115.0 =>  120.0   slice-size: 2175
+ 120.0 =>  125.0   slice-size: 1844
+ 125.0 =>  130.0   slice-size: 1647
+ 130.0 =>  135.0   slice-size: 1697
+ 135.0 =>  140.0   slice-size: 1587
+ 140.0 =>  145.0   slice-size: 1625
+ 145.0 =>  150.0   slice-size: 1194
+ 150.0 =>  155.0   slice-size: 654
+ 155.0 =>  160.0   slice-size: 473
+ 160.0 =>  165.0   slice-size: 359
+ 165.0 =>  170.0   slice-size: 353
+ 170.0 =>  175.0   slice-size: 286
+ 175.0 =>  180.0   slice-size: 281
+Total   size:  100'000   weight: 1'409'839.1
+stop=0
+Done
+```
