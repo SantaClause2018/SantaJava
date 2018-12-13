@@ -10,9 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static final double MAX_SLEIGH_WEIGHT = 1000;
-    public static final double EMPTY_SLEIGH_WEIGHT = 10;
-
     public static void main(String[] args) throws IOException {
 
         Stopwatch stopwatch = Stopwatch.createStarted();

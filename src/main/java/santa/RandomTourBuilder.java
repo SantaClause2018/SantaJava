@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static santa.Main.EMPTY_SLEIGH_WEIGHT;
-import static santa.Main.MAX_SLEIGH_WEIGHT;
+import static santa.Route.EMPTY_SLEIGH_WEIGHT;
+import static santa.Route.MAX_SLEIGH_WEIGHT;
 
 public class RandomTourBuilder {
 
@@ -41,7 +41,7 @@ public class RandomTourBuilder {
             currentSleighWeight += curGift.getWeight();
 
             /* overweight => create new tour */
-            if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
+            if (currentSleighWeight > (MAX_SLEIGH_WEIGHT + EMPTY_SLEIGH_WEIGHT)) {
                 /* close tour */
                 tourLengths.set(currentTour, tourLengths.get(currentTour) + curGift.getNorthPoleDistance());
                 System.out.println("tour " + currentTour + " has lenght " + tourLengths.get(currentTour));
@@ -60,7 +60,7 @@ public class RandomTourBuilder {
             } else {
                 /* add distance A -> B */
                 tourLengths.set(currentTour, tourLengths.get(currentTour) +
-                    Haversine.distance(
+                    Haversine.approximateDistance(
                         curSet.get(i-1).getLatitude(), curSet.get(i-1).getLongitude(),
                         curGift.getLatitude(), curGift.getLongitude()
                     )

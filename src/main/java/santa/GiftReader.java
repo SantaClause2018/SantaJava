@@ -17,8 +17,8 @@ public class GiftReader {
         String[] s = line.split(",");
         return new Gift(
                 Integer.parseInt(s[0]),
-                Math.toRadians(Double.parseDouble(s[1])),
-                Math.toRadians(Double.parseDouble(s[2])),
+                Double.parseDouble(s[1]),
+                Double.parseDouble(s[2]),
                 Double.parseDouble(s[3]),
                 NOT_ASSIGNED_TO_TOUR
         );
