@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         Path filePath = Paths.get(
             ".." + java.io.File.separator +
@@ -23,19 +23,22 @@ public class Main {
         GiftReader reader = new GiftReader(filePath);
         List<Gift> gifts = reader.load();
 
+        new MapService().run(gifts);
         //DistanceTest.runAccuracyTest(gifts, 1000);
         //DistanceTest.runTimeTest(gifts, gifts.size());
 
+        /*
         Solution slicedRandomSolution = SlicedRandomTourBuilder.getTours(gifts);
         slicedRandomSolution.calculateTotalWeariness();
         System.out.println("random slice: total weariness: " + slicedRandomSolution.getTotalWeariness() +
                 ", total distance: " + slicedRandomSolution.getTotalLength());
 
-        System.out.println("Done");
-
         Solution randomSolution = RandomTourBuilder.getTours(gifts);
         randomSolution.calculateTotalWeariness();
         System.out.println("random: total weariness: " + randomSolution.getTotalWeariness() +
                 ", total distance: " + randomSolution.getTotalLength());
+        */
+
+        System.out.println("Done");
     }
 }
