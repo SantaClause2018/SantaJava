@@ -52,6 +52,7 @@ public class RandomTourBuilder {
             gift.setTour(currentTourId);
             tour.addGift(gift);
         }
+        solution.addTour(tour); // add last tour
         stopwatch.stop();
 
         return solution;

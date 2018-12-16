@@ -1,7 +1,9 @@
 package santa;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Solution {
 
@@ -27,8 +29,17 @@ public class Solution {
     }
 
 
-    public int getNumberOfTours() {
+    public int tourCnt() {
         return tours.size();
+    }
+
+    public boolean containsTour(int index) {
+        for (Tour tour : tours) {
+            if (tour.getTourId() == index) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public double calculateTotalWeariness() {
@@ -72,6 +83,25 @@ public class Solution {
             weariness.add(tour.getWeariness());
         }
         return weariness;
+    }
+
+    public static Solution fromSubmission(Map<Integer,Integer> submission, List<Gift> gifts) {
+        Solution solution = new Solution();
+        Map<Integer, Tour> tmpTours = new HashMap<>();
+
+        for (Gift gift: Tour.cloneGiftList(gifts)) {
+            int tourId = submission.get(gift.getId());
+            if ( !tmpTours.containsKey(tourId)) {
+                tmpTours.put(tourId, new Tour(tourId));
+            }
+            gift.setTour(tourId);
+            tmpTours.get(tourId).addGift(gift);
+        }
+        for (Map.Entry<Integer,Tour> entry : tmpTours.entrySet()) {
+            solution.addTour(entry.getValue());
+
+        }
+        return solution;
     }
 
 

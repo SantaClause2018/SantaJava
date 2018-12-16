@@ -42,6 +42,8 @@ public class Tour {
         return gifts.remove(index);
     }
 
+    public Gift getGift(int index) { return gifts.get(index); }
+
     public int size() {
         return gifts.size();
     }
@@ -115,7 +117,8 @@ public class Tour {
         ArrayList<Gift> clonedGifts = new ArrayList<>(originalGifts.size());
 
         for (Gift g : originalGifts) {
-            clonedGifts.add(g);
+            Gift clonedGift = new Gift(g.getId(), g.getLatitude(), g.getLongitude(), g.getWeight(), g.getTour());
+            clonedGifts.add(clonedGift);
         }
         return clonedGifts;
     }

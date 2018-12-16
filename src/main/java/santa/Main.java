@@ -14,13 +14,19 @@ public class Main {
 
         Path filePath = Paths.get(
             ".." + java.io.File.separator +
-            "SantaData" + java.io.File.separator +
-            "Problem" + java.io.File.separator +
-            "gifts.csv"
+            "SantaData"
             //"gifts_reduced.csv"
         );
+        Path sourceFilePath  = Paths.get(filePath.toString() +
+                java.io.File.separator + "Problem" + java.io.File.separator +
+                "gifts.csv");
 
-        GiftReader reader = new GiftReader(filePath);
+        Path solutionFilePath= Paths.get(filePath.toString() +
+                java.io.File.separator + "Submission" + java.io.File.separator +
+                "solution.csv");
+
+
+        GiftReader reader = new GiftReader(sourceFilePath);
         List<Gift> gifts = reader.load();
 
         new MapService().run(gifts);
@@ -33,11 +39,20 @@ public class Main {
         System.out.println("random slice: total weariness: " + slicedRandomSolution.getTotalWeariness() +
                 ", total distance: " + slicedRandomSolution.getTotalLength());
 
+        */
+
         Solution randomSolution = RandomTourBuilder.getTours(gifts);
         randomSolution.calculateTotalWeariness();
-        System.out.println("random: total weariness: " + randomSolution.getTotalWeariness() +
-                ", total distance: " + randomSolution.getTotalLength());
-        */
+
+         if (SolutionValidator.isValid(randomSolution, gifts.size())) {
+             System.out.println("random: total weariness: " + randomSolution.getTotalWeariness() +
+                     ", total distance: " + randomSolution.getTotalLength());
+
+             SubmissionFileWriter writer = new SubmissionFileWriter(solutionFilePath, gifts);
+             writer.writeFile(randomSolution);
+         }
+
+
 
         System.out.println("Done");
     }
