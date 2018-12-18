@@ -71,7 +71,7 @@ public class SubmissionFileWriter {
             double oldWariness = oldSolution.calculateTotalWeariness();
             double newWeariness = newSolution.calculateTotalWeariness();
             if (newWeariness < oldWariness ) { return true; }
-            return true;
+            return false;
         }
         catch (IOException ex) {
             return true;

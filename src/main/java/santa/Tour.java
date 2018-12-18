@@ -3,6 +3,7 @@ package santa;
 import com.google.common.base.Stopwatch;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static santa.Gift.NOT_ASSIGNED_TO_TOUR;
@@ -122,4 +123,6 @@ public class Tour {
         }
         return clonedGifts;
     }
+
+    public void swapGifts(int index1, int index2)  { Collections.swap(gifts, index1, index2); }
 }

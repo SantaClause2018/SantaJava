@@ -37,10 +37,13 @@ public class Main {
         Solution solution = SlicedRandomTourBuilder.getTours(gifts);
        //Solution solution = RandomTourBuilder.getTours(gifts);
         solution.calculateTotalWeariness();
+        System.out.println("random: total weariness: " + solution.getTotalWeariness() +
+                ", total distance: " + solution.getTotalLength());
+        TwoOpt.optimize(solution);
 
          if (SolutionValidator.hasCorrectNumberOfGifts(solution,gifts)) {
 
-             System.out.println("random: total weariness: " + solution.getTotalWeariness() +
+             System.out.println("optimized random: total weariness: " + solution.getTotalWeariness() +
                      ", total distance: " + solution.getTotalLength());
 
              SubmissionFileWriter writer = new SubmissionFileWriter(solutionFilePath, gifts);
