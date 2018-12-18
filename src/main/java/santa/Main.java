@@ -33,23 +33,18 @@ public class Main {
         //DistanceTest.runAccuracyTest(gifts, 1000);
         //DistanceTest.runTimeTest(gifts, gifts.size());
 
-        /*
-        Solution slicedRandomSolution = SlicedRandomTourBuilder.getTours(gifts);
-        slicedRandomSolution.calculateTotalWeariness();
-        System.out.println("random slice: total weariness: " + slicedRandomSolution.getTotalWeariness() +
-                ", total distance: " + slicedRandomSolution.getTotalLength());
 
-        */
+        Solution solution = SlicedRandomTourBuilder.getTours(gifts);
+       //Solution solution = RandomTourBuilder.getTours(gifts);
+        solution.calculateTotalWeariness();
 
-        Solution randomSolution = RandomTourBuilder.getTours(gifts);
-        randomSolution.calculateTotalWeariness();
+         if (SolutionValidator.hasCorrectNumberOfGifts(solution,gifts)) {
 
-         if (SolutionValidator.isValid(randomSolution, gifts.size())) {
-             System.out.println("random: total weariness: " + randomSolution.getTotalWeariness() +
-                     ", total distance: " + randomSolution.getTotalLength());
+             System.out.println("random: total weariness: " + solution.getTotalWeariness() +
+                     ", total distance: " + solution.getTotalLength());
 
              SubmissionFileWriter writer = new SubmissionFileWriter(solutionFilePath, gifts);
-             writer.writeFile(randomSolution);
+             writer.writeFile(solution);
          }
 
 

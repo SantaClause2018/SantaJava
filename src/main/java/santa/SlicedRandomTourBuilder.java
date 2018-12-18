@@ -57,9 +57,9 @@ public class SlicedRandomTourBuilder {
         int i;
 
         int currentTour = 0;
-        double currentSleighWeight = EMPTY_SLEIGH_WEIGHT;
+        double currentSleighWeight = 0;
         Tour tour = new Tour(currentTour);
-        Solution tours = new Solution();
+        Solution solution = new Solution();
 
         /* Loop over slices => longitude-map using key (longitude range: <lower, upper>) */
         for (Range<Double> longitudeKeys : slices.getLongitudeMap().asMapOfRanges().keySet()) {
@@ -75,12 +75,9 @@ public class SlicedRandomTourBuilder {
 
                 /* overweight => create new tour */
                 if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
-                    /* close tour */
-                    //System.out.println("tour " + currentTour + " has length " + tourLengths.get(currentTour));
 
                     /* add old */
-                    tour.calcWeariness();
-                    tours.addTour(tour);
+                    solution.addTour(tour);
 
                     /* create new tour */
                     currentTour++;
@@ -91,12 +88,12 @@ public class SlicedRandomTourBuilder {
                 gift.setTour(currentTour);
                 tour.addGift(gift);
             }
-            tours.addTour(tour);
         }
+        solution.addTour(tour); // last tour
 
         stopwatch.stop();
         System.out.println("stop=" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
 
-        return tours;
+        return solution;
     }
 }

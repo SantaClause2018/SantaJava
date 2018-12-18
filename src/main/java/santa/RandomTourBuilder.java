@@ -5,7 +5,6 @@ import com.google.common.base.Stopwatch;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static santa.Tour.MAX_SLEIGH_WEIGHT;
 import static santa.Tour.cloneGiftList;
@@ -38,10 +37,9 @@ public class RandomTourBuilder {
             currentSleighWeight += gift.getWeight();
 
             /* overweight => create new tour */
-            if (currentSleighWeight > (MAX_SLEIGH_WEIGHT)) {
+            if (currentSleighWeight > MAX_SLEIGH_WEIGHT) {
 
                 /* add old */
-                tour.calcWeariness();
                 solution.addTour(tour);
 
                 /* create new tour */
