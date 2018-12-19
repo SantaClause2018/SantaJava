@@ -1,5 +1,7 @@
 package santa;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,17 +87,18 @@ public class Solution {
         return weariness;
     }
 
-    public static Solution fromSubmission(Map<Integer,Integer> submission, List<Gift> gifts) {
+    public static Solution fromSubmission(List<Pair<Integer,Integer>> submission, List<Gift> gifts) {
         Solution solution = new Solution();
         Map<Integer, Tour> tmpTours = new HashMap<>();
+        List<Gift> clonedGifts = Tour.cloneGiftList(gifts);
 
-        for (Gift gift: Tour.cloneGiftList(gifts)) {
-            int tourId = submission.get(gift.getId());
+        for (Pair<Integer,Integer> pair: submission ) {
+            int tourId = pair.getValue();
             if ( !tmpTours.containsKey(tourId)) {
                 tmpTours.put(tourId, new Tour(tourId));
             }
-            gift.setTour(tourId);
-            tmpTours.get(tourId).addGift(gift);
+            clonedGifts.get(pair.getKey()-1).setTour(tourId);
+            tmpTours.get(tourId).addGift( clonedGifts.get(pair.getKey()-1));
         }
         for (Map.Entry<Integer,Tour> entry : tmpTours.entrySet()) {
             solution.addTour(entry.getValue());

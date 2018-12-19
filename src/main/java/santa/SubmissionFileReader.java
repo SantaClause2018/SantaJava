@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -29,7 +30,7 @@ public class SubmissionFileReader {
         this.filePath = filePath;
     }
 
-    public HashMap<Integer,Integer> load() throws IOException {
-        return  (HashMap)Files.readAllLines(filePath).stream().skip(1).map(mapToSubmission).collect(Collectors.toMap(Pair<Integer,Integer>:: getKey, Pair<Integer,Integer>::getValue));
+    public List<Pair<Integer,Integer>> load() throws IOException {
+        return  Files.readAllLines(filePath).stream().skip(1).map(mapToSubmission).collect(Collectors.toList());
     }
 }
